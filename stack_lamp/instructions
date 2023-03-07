@@ -8,3 +8,14 @@ docker run -d --name my_lamp_c -p 8000:80 my_lamp
 
 ->  http://localhost:8000/
 
+########################
+# Ajout de persistance #
+########################
+
+# Création du volume
+docker volume create --name mysqldata
+
+# Exécution de l'image avec des volumes
+# - le volume nommé "mysqldata" est basé sur le dossier /var/lib/mysql
+docker run -d --name my_lamp_c -v mysqldata:/var/lib/mysql -p 8000:80 my_lamp
+
