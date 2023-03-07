@@ -1,0 +1,21 @@
+# Build l'image
+docker build -t vtest .
+
+# Création et montage du volume data-test dans le répertoire /data du conteneur
+docker run -ti --name vtest_c -v data-test:/data vtest
+
+# Monitoring en temps réel du contenu du volume
+# -> ouverture du répertoire Mountpoint inspecté précédemment
+#    dans mon cas c'était /var/lib/docker/volumes/data-test/_data
+
+# Dans le terminal avec le shell du conteneur : création d'un fichier 'test.txt' avec le contenu 'ecriture dans un volume'
+echo "ceci est un test" > test.txt
+
+# Quittez le conteneur et supprimez le
+docker rm -f vtest_c
+
+# Création d'un nouveau conteneur pour vérifier que les données sont vien sauvegardées
+docker run -ti --name vtest_c -v data-test:/data vtest
+
+# Vérification du contenu du fichier 
+cat test.txt
