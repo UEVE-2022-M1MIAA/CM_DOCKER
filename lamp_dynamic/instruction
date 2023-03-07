@@ -1,0 +1,17 @@
+# Construction de l'image à partir du Dockerfile
+# NB: utilisation d'un formulaire pour permettre l'ajout de nouveau volumes
+
+docker build -t my_lamp .
+
+########################
+# Ajout de persistance #
+########################
+
+# Création du volume
+
+docker volume create --name mysqldata
+
+# Exécution de l'image avec des volumes
+# - le volume nommé "mysqldata" est basé sur le dossier /var/lib/mysql
+
+docker run -d --name my_lamp_c -v mysqldata:/var/lib/mysql -p 8000:80 my_lamp
